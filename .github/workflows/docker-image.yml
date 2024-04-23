@@ -18,3 +18,9 @@ jobs:
     - name: Lists the docker images
       run: docker images
     - uses: xic-let/academy/.github/actions/docker_build@main
+      with:
+        path_dockerfile: './Dockerfile'
+        image_name: 'academy'
+        tag_name: 'latest'
+
+

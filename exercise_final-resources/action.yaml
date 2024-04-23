@@ -1,18 +1,15 @@
-name: main
-description: perform action
+name: 'Docker Build'
+description: 'Builds a Docker image'
 inputs:
-  Hello_World:
-    description: ""
+  path_dockerfile:
+    description: 'Path to the Dockerfile'
     required: true
-    default: "default value"
+  image_name:
+    description: 'Name of the Docker image'
+    required: true
+  tag_name:
+    description: 'Tag for the Docker image'
+    required: false
 runs:
-  using: composite
-  steps:
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag academy:$(date +%s)
-      shell: bash
-      
-    - name : list the docker images
-      run: docker images
-      shell: bash
-      
+  using: 'docker'
+  image: 'Dockerfile'
