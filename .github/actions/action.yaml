@@ -6,10 +6,10 @@ inputs:
     required: false
     default: 'Dockerfile'
   image_name:
-    description: 'academy'
+    description: 'Name of the Docker image'
     required: true
   tag_name:
-    description: 'latest'
+    description: 'Tag for the Docker image'
     required: false
 runs:
   using: 'docker'

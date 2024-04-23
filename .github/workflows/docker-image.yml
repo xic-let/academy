@@ -7,10 +7,13 @@ on:
     branches: [ "main" ]
 
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    
     - name: Lists the docker images
       run: docker images
     - name: Set tag and build Docker image
