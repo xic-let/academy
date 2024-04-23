@@ -1,16 +1,36 @@
-name: 'Docker Build'
-description: 'Builds a Docker image'
+name: main
+description: perform action
 inputs:
   path_dockerfile:
-    description: 'Path to the Dockerfile'
+    description: "Allows us to locate the correct Dockerfile, even if it has a different name or is located in a different directory."
     required: false
-    default: 'Dockerfile'
   image_name:
-    description: 'Name of the Docker image'
-    required: true
-  tag_name:
-    description: 'Tag for the Docker image'
+    description: "Specifies the name for the generated Docker image."
     required: false
+  tag_name:
+    description: "Specifies the tag to be added to the final image."
+    required: false
+ 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: composite
+  steps:
+    - run: |
+        if [ -z "${{ inputs.tag_name }}" ]; then
+            echo "TAG=$(date +%s)" >> $GITHUB_ENV
+        else
+            echo "TAG=${{ inputs.tag_name }}" >> $GITHUB_ENV
+        fi
+      shell: bash
+    - run: |
+        if [ -z "${{ inputs.path_dockerfile }}" ]; then
+            echo "DOCKERFILE_PATH=Dockerfile" >> $GITHUB_ENV
+        else
+            echo "DOCKERFILE_PATH=${{ inputs.path_dockerfile }}" >> $GITHUB_ENV
+        fi
+      shell: bash
+    - run: echo "DOCKER_IMAGE_NAME=${{ inputs.image_name }}:$TAG" >> $GITHUB_ENV
+      shell: bash
+    - name: Build docker image
+      run: docker build . --file $DOCKERFILE_PATH --tag $DOCKER_IMAGE_NAME
+      shell: bash
+ 
