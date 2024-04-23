@@ -1,13 +1,17 @@
-name: {{ action-name }}
-description: {{ action-description }}
+name: new DockerImage
+description: 'Builds a new Docker image'
 inputs:
-  {{ input-name}}:
-    description: "{{ input-description }}"
-    required: {{ false or true }}
-    default: "{{ default-value }}"
+  input-description:
+    description: " input-description "
+    required: true
+    default: "8080:8080"
 runs:
   using: composite
   steps:
-    - run: |
-        echo "Hello World"
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
       shell: bash
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    
+
+      
