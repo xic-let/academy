@@ -1,0 +1,34 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Lists the docker images
+      run: docker images
+    - name: Set tag and build Docker image
+      uses: xic-let/academy/.github/actions/docker_build@main
+      with:
+        path_dockerfile: './Dockerfile'
+        image_name: 'academy'
+        tag_name: 'latest'
+      env:
+        TAG: ${{ steps.set-tag.outputs.tag }}
+    - name: Export Docker image name
+      run: |
+        if [ -z "${{ inputs.tag_name }}" ]; then
+          echo "TAG=$(date +%s)" >> $GITHUB_ENV
+        else
+          echo "TAG=${{ inputs.tag_name }}" >> $GITHUB_ENV
+        fi
+        echo "DOCKER_IMAGE_NAME=${{ inputs.image_name }}:$TAG" >> $GITHUB_ENV
