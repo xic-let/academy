@@ -12,14 +12,17 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag academy:latest
     
     - name: Lists the docker images
       run: docker images
     - name: Set tag and build Docker image
-      uses: xic-let/academy/.github/actions/docker_build@main
+      uses: ./academy/.github/actions/docker_build@main
       with:
         path_dockerfile: './Dockerfile'
+        
         image_name: 'academy'
         tag_name: 'latest'
       env:
