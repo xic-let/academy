@@ -3,7 +3,8 @@ description: 'Builds a Docker image'
 inputs:
   path_dockerfile:
     description: 'Path to the Dockerfile'
-    required: true
+    required: false
+    default: 'Dockerfile'
   image_name:
     description: 'Name of the Docker image'
     required: true
