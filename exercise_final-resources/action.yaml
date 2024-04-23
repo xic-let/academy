@@ -1,17 +1,18 @@
-name: new DockerImage
-description: 'Builds a new Docker image'
+name: main
+description: perform action
 inputs:
-  input-description:
-    description: " input-description "
+  Hello_World:
+    description: ""
     required: true
-    default: "8080:8080"
+    default: "default value"
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v3
     - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag academy:$(date +%s)
       shell: bash
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-    
-
+   
+    - name : list the docker images
+      run: docker images
+      shell: bash
       
