@@ -1,0 +1,16 @@
+name: 'Docker Build'
+description: 'Builds a Docker image'
+inputs:
+  path_dockerfile:
+    description: 'Path to the Dockerfile'
+    required: false
+    default: 'Dockerfile'
+  image_name:
+    description: 'academy'
+    required: true
+  tag_name:
+    description: 'latest'
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
